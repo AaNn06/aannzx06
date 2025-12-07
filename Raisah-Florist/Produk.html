@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raisah Florist - Katalog Bunga</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="page-header">
+    <h1>Raisah Florist</h1>
+    <p>Pesan bunga untuk momen spesial Anda</p>
+    <span class="header-floral">🌷</span>
+</header>
+
+<h2 class="catalog-title">Katalog Produk</h2>
+
+<section class="catalog-content">
+
+    <div class="product" onclick="pesanProduk('Buket Mawar', 150000)">
+        <img src="https://i.imgur.com/7E3XhUj.png" alt="Buket Mawar">
+        <h3>Buket Mawar</h3>
+        <p>Rp 150.000</p>
+        <button class="btn">Pesan Sekarang</button>
+    </div>
+
+    <div class="product" onclick="pesanProduk('Buket Lily', 180000)">
+        <img src="https://i.imgur.com/ZZ4lVeU.png" alt="Buket Lily">
+        <h3>Buket Lily</h3>
+        <p>Rp 180.000</p>
+        <button class="btn">Pesan Sekarang</button>
+    </div>
+
+    <div class="product" onclick="openCustomPopup()">
+        <img src="https://i.imgur.com/ZZ4lVeU.png" alt="Custom Bouquet">
+        <h3>Bouquet Custom</h3>
+        <p>Request sesuai keinginan</p>
+        <button class="btn">Pesan Custom</button>
+    </div>
+
+</section>
+
+<!-- POPUP FORM -->
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <h3>Form Pemesanan</h3>
+
+        <input type="text" id="Nama" placeholder="Nama" required>
+        <input type="text" id="NoWhatsApp" placeholder="No. WhatsApp" required>
+        <input type="number" id="Jumlah" placeholder="Jumlah" required>
+        <input type="text" id="Produk" readonly>
+        <input type="number" id="Harga" readonly>
+        <input type="date" id="DueDate" required>
+
+        <button class="btn" onclick="kirimPesanan()">Kirim Pesanan</button>
+        <button class="btn-back" onclick="tutupPopup()">Batal</button>
+    </div>
+</div>
+
+<!-- POPUP CUSTOM -->
+<div id="popupCustom" class="popup">
+    <div class="popup-content">
+        <h3>Pesanan Custom</h3>
+
+        <p id="notifCustom" style="
+            background:#ffe0f2;
+            padding:8px;
+            border-radius:6px;
+            border: 1px dashed #C75B7A;
+            display:none;
+        ">⚠️ Lengkapi semua data terlebih dahulu.</p>
+
+        <input type="text" id="custName" placeholder="Nama Customer" required>
+        <input type="text" id="custWhatsApp" placeholder="No. WhatsApp" required>
+        <input type="text" id="custFlower" placeholder="Jenis bunga (bebas request)">
+        <input type="number" id="custBudget" placeholder="Budget (Rp)" required>
+        <textarea id="custNote" placeholder="Catatan tambahan..."></textarea>
+        <input type="date" id="custDue" required>
+
+        <button class="btn" onclick="kirimCustomOrder()">Kirim Pesanan</button>
+        <button class="btn-back" onclick="closeCustomPopup()">Batal</button>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2025 Raisah Florist</p>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
