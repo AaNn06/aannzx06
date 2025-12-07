@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaksi - Raisah Florist</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="transaksi-body">
+
+<header class="page-header">
+    <h2>💐 Transaksi Penjualan</h2>
+    <button class="btn-back" onclick="goTo('dashboard.html')">Kembali</button>
+    <span class="header-floral">🌸</span>
+</header>
+
+<main class="transaksi-main">
+
+<section class="transaksi-form card">
+    <h3>Input Transaksi</h3>
+
+    <form id="transForm">
+        <input type="text" id="nama" placeholder="Nama Pelanggan" required>
+        <input type="text" id="produk" placeholder="Nama Produk" required>
+        <input type="number" id="jumlah" placeholder="Jumlah" min="1" required>
+        <input type="number" id="harga" placeholder="Harga Satuan" min="1000" required>
+
+        <select id="metode" required>
+            <option disabled selected>Pilih Metode Pembayaran</option>
+            <option value="Tunai">Tunai</option>
+            <option value="Transfer Bank">Transfer Bank</option>
+            <option value="E-Wallet">E-Wallet</option>
+        </select>
+
+        <button type="submit" class="btn">Simpan Transaksi</button>
+        <button type="button" onclick="resetData()" class="btn-back">Reset</button>
+    </form>
+</section>
+
+<section class="transaksi-table card">
+    <h3>Data Transaksi</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Pelanggan</th>
+                <th>Produk</th>
+                <th>Jumlah</th>
+                <th>Total Harga</th>
+                <th>Metode</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="dataTransaksi"></tbody>
+    </table>
+</section>
+
+<section class="transaksi-chart card">
+    <h3>Grafik Penjualan</h3>
+    <canvas id="chartPenjualan"></canvas>
+</section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
