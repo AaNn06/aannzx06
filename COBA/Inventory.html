@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory - Raisah Florist</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="inv-body">
+
+<header class="page-header">
+    <h2>🌼 Inventory & Grafik Stok</h2>
+    <button class="btn-back" onclick="goTo('dashboard.html')">Kembali</button>
+    <span class="header-floral">🌸</span>
+</header>
+
+<main class="inv-main">
+
+<section class="inv-form card">
+    <h3>Tambah / Edit Produk</h3>
+
+    <form id="invForm">
+        <input type="text" id="produkNama" placeholder="Nama Produk" required>
+        <input type="number" id="stokProduk" placeholder="Stok" min="0" required>
+        <button type="submit" class="btn">Simpan Produk</button>
+    </form>
+</section>
+
+<section class="inv-table card">
+    <h3>Data Inventory</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Produk</th>
+                <th>Stok</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="dataInventory"></tbody>
+    </table>
+</section>
+
+<section class="inv-chart card">
+    <h3>Grafik Stok Produk</h3>
+    <canvas id="chartStok"></canvas>
+</section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

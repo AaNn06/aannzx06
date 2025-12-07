@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Raisah Florist</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="page-header">
+    <h1 id="judulDashboard">Dashboard</h1>
+    <p id="subTitle"></p>
+    <span class="header-floral">🌷</span>
+</header>
+
+<nav class="menu">
+    <button class="btn" onclick="goTo('transaksi.html')" id="mTransaksi">Transaksi & Grafik Penjualan</button>
+    <button class="btn" onclick="goTo('pesanan.html')" id="mPesanan">Pesanan Masuk</button>
+    <button class="btn owner-only" onclick="goTo('inventory.html')" id="mInventory">Inventory</button>
+    <button class="btn-back" onclick="logout()">Logout</button>
+</nav>
+
+<footer class="footer">
+    <p>&copy; 2025 Raisah Florist</p>
+</footer>
+
+<script src="js/script.js"></script>
+<script>
+    const role = sessionStorage.getItem("role");
+    if (!role) {
+        alert("Silakan login terlebih dahulu!");
+        window.location.href = "login.html";
+    }
+
+    document.getElementById("judulDashboard").innerText =
+        role === "owner" ? "Dashboard Owner" : "Dashboard Pegawai";
+
+    document.getElementById("subTitle").innerText =
+        role === "owner" ? "Selamat datang, pemilik toko!" : "Selamat bekerja!";
+
+    if (role !== "owner") {
+        document.querySelectorAll(".owner-only").forEach(el => el.style.display = "none");
+    }
+</script>
+
+</body>
+</html>
