@@ -1,20 +1,58 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raisah Florist - Katalog Bunga</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Raisah Florist - Katalog & Dashboard Customer</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-<header class="page-header">
-    <h1>Raisah Florist</h1>
-    <p>Pesan bunga untuk momen spesial Anda</p>
+<!-- NAVBAR (customer) -->
+<header class="nav page-header">
+    <div class="logo">Raisah<span class="dot">.</span>Florist</div>
+
+    <ul class="nav-menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#review">Review</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-icons">
+        <i class="fa-regular fa-heart" title="Favorit"></i>
+        <i class="fa-solid fa-cart-shopping" title="Keranjang"></i>
+        <i class="fa-regular fa-user" title="Login" onclick="window.location='login.html'"></i>
+    </div>
     <span class="header-floral">🌷</span>
 </header>
 
-<h2 class="catalog-title">Katalog Produk</h2>
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="hero-text">
+        <h1>Fresh Flowers</h1>
+        <h2>Natural & Beautiful Flowers</h2>
+        <p>Temukan berbagai pilihan bunga segar, buket hadiah, dekorasi, dan banyak lagi di Raisah Florist.</p>
+        <button class="btn" onclick="location.href='#products'">Shop Now</button>
+    </div>
+    <div class="hero-img">
+        <img src="https://i.imgur.com/7E3XhUj.png" alt="Flowers" />
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+    <h2 class="section-title">About Our Shop</h2>
+    <p class="about-text">
+        Raisah Florist adalah toko bunga yang menyediakan berbagai jenis bunga segar dan rangkaian bunga berkualitas tinggi.
+        Kami berkomitmen memberikan layanan terbaik untuk setiap pelanggan.
+    </p>
+</section>
+
+<!-- PRODUCTS / KATALOG -->
+<h2 class="catalog-title" id="products">Katalog Produk</h2>
 
 <section class="catalog-content">
 
@@ -22,27 +60,27 @@
         <img src="https://i.imgur.com/7E3XhUj.png" alt="Buket Mawar">
         <h3>Buket Mawar</h3>
         <p>Rp 150.000</p>
-        <button class="btn">Pesan Sekarang</button>
+        <button class="btn" onclick="pesanProduk('Buket Mawar',150000); event.stopPropagation();">Pesan Sekarang</button>
     </div>
 
     <div class="product" onclick="pesanProduk('Buket Lily', 180000)">
         <img src="https://i.imgur.com/ZZ4lVeU.png" alt="Buket Lily">
         <h3>Buket Lily</h3>
         <p>Rp 180.000</p>
-        <button class="btn">Pesan Sekarang</button>
+        <button class="btn" onclick="pesanProduk('Buket Lily',180000); event.stopPropagation();">Pesan Sekarang</button>
     </div>
 
     <div class="product" onclick="openCustomPopup()">
         <img src="https://i.imgur.com/ZZ4lVeU.png" alt="Custom Bouquet">
         <h3>Bouquet Custom</h3>
         <p>Request sesuai keinginan</p>
-        <button class="btn">Pesan Custom</button>
+        <button class="btn" onclick="openCustomPopup(); event.stopPropagation();">Pesan Custom</button>
     </div>
 
 </section>
 
 <!-- POPUP FORM -->
-<div id="popup" class="popup">
+<div id="popup" class="popup" aria-hidden="true">
     <div class="popup-content">
         <h3>Form Pemesanan</h3>
 
@@ -59,7 +97,7 @@
 </div>
 
 <!-- POPUP CUSTOM -->
-<div id="popupCustom" class="popup">
+<div id="popupCustom" class="popup" aria-hidden="true">
     <div class="popup-content">
         <h3>Pesanan Custom</h3>
 
@@ -82,6 +120,35 @@
         <button class="btn-back" onclick="closeCustomPopup()">Batal</button>
     </div>
 </div>
+
+<!-- REVIEW -->
+<section class="review" id="review">
+    <h2 class="section-title">Customer Reviews</h2>
+    <div class="review-list">
+        <div class="review-card">
+            <p>"Pelayanan cepat dan kualitas bunganya bagus!"</p>
+            <span>- Ayu</span>
+        </div>
+        <div class="review-card">
+            <p>"Buketnya cantik dan tahan lama!"</p>
+            <span>- Lina</span>
+        </div>
+        <div class="review-card">
+            <p>"Owner ramah, harga terjangkau."</p>
+            <span>- Rani</span>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+    <h2 class="section-title">Contact Us</h2>
+    <div class="contact-box">
+        <p><i class="fa-solid fa-location-dot"></i> Jl. Mawar Indah No. 21</p>
+        <p><i class="fa-solid fa-phone"></i> 0812-3456-7890</p>
+        <p><i class="fa-solid fa-envelope"></i> raisahflorist@gmail.com</p>
+    </div>
+</section>
 
 <footer class="footer">
     <p>&copy; 2025 Raisah Florist</p>

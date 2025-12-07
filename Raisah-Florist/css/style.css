@@ -1,8 +1,8 @@
 /* =========================================================
-   GLOBAL THEME – Raisah Florist
+   GLOBAL THEME – Raisah Florist (merged)
    ========================================================= */
 
-:root {
+   :root {
     --primary: #C75B7A;
     --primary-dark: #8E4162;
     --secondary: #F7E6E8;
@@ -11,74 +11,78 @@
     --text-dark: #3A1F2D;
 }
 
+/* Reset & base */
+* { box-sizing: border-box; }
 body {
     margin: 0;
     font-family: "Poppins", sans-serif;
     background: var(--bg-light);
     color: var(--text-dark);
+    -webkit-font-smoothing: antialiased;
 }
 
 /* =========================================================
-   GLOBAL HEADER
+   GLOBAL HEADER – MODERN FLORIST STYLE
    ========================================================= */
 
-   .page-header {
+.page-header {
     background: linear-gradient(135deg, #F7E6E8, #FFF7FA);
     border-bottom: 3px solid var(--primary);
-    padding: 25px 30px;
+    padding: 18px 30px;
     border-radius: 0 0 18px 18px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    margin-bottom: 25px;
+    margin-bottom: 18px;
     text-align: center;
     position: relative;
 }
 
-/* Judul halaman */
-.page-header h1,
-.page-header h2 {
-    margin: 0;
-    font-size: 28px;
+/* logo + nav merge */
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 30px;
+    background: transparent;
+}
+
+/* logo */
+.logo {
+    font-size: 22px;
     font-weight: 700;
     color: var(--primary-dark);
-    letter-spacing: 1px;
 }
+.logo .dot { color: var(--primary); }
 
-/* Subjudul */
-.page-header p {
-    margin-top: 5px;
-    font-size: 15px;
-    color: #6a4b5e;
+/* nav menu */
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 22px;
+    margin: 0;
+    padding: 0;
+    align-items: center;
 }
-
-/* Tombol kembali */
-.header-back {
-    position: absolute;
-    left: 20px;
-    top: 22px;
-    background: var(--primary);
-    color: white;
-    padding: 8px 14px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: 0.2s;
-    font-size: 14px;
+.nav-menu li a {
+    text-decoration: none;
+    color: var(--text-dark);
     font-weight: 600;
 }
-
-.header-back:hover {
-    background: var(--primary-dark);
+.nav-icons i {
+    margin-left: 12px;
+    cursor: pointer;
 }
 
 /* Icon hiasan bunga */
 .header-floral {
     position: absolute;
-    right: 25px;
-    top: 15px;
-    font-size: 32px;
-    opacity: 0.4;
+    right: 30px;
+    top: 10px;
+    font-size: 28px;
+    opacity: 0.35;
 }
 
+/* container (used in admin pages if needed) */
 .container {
     background: white;
     padding: 25px;
@@ -99,13 +103,13 @@ button {
     border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
-    transition: 0.2s;
+    transition: 0.18s;
 }
-
 .btn:hover,
-button:hover {
-    background: var(--primary-dark);
-}
+button:hover { background: var(--primary-dark); }
+
+/* Back / secondary button */
+.btn-back { background: #666; color: #fff; }
 
 /* Inputs */
 input, select, textarea {
@@ -118,101 +122,42 @@ input, select, textarea {
     font-size: 14px;
 }
 
-/* Cards */
-.card {
-    background: white;
-    border-radius: 14px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
 /* =========================================================
-   LOGIN PAGE
+   CUSTOMER – HERO / NAV / SECTIONS
    ========================================================= */
 
-.login-body {
-    background: linear-gradient(135deg, #F7E6E8, #FFF7FA);
-    height: 100vh;
+.hero {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    padding: 40px 60px;
+    background: linear-gradient(90deg,#fff5f8 0%, #fff 100%);
+    gap: 20px;
 }
 
-.login-container {
-    background: white;
-    padding: 35px;
-    border-radius: 15px;
-    width: 330px;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+.hero-text h1 {
+    font-size: 44px;
+    margin: 0;
+    color: #222;
 }
-
-.title {
-    font-size: 26px;
-    color: var(--primary-dark);
-    margin-bottom: 5px;
+.hero-text h2 {
+    font-size: 24px;
+    margin: 8px 0;
+    color: var(--primary);
 }
+.hero-text p { width: 70%; margin-top: 12px; color:#5a3d46; }
 
-.subtitle {
-    font-size: 14px;
-    color: #444;
-    margin-bottom: 20px;
-}
+.hero-img img { width: 360px; max-width: 40vw; border-radius: 12px; }
 
-.register-link {
-    margin-top: 15px;
-    font-size: 14px;
-}
-
-/*Daftar Akun Baru*/
-.register-link a {
-    color: var(--primary-dark);
-    font-weight: 600;
-    text-decoration: none;
-}
-
-.register-link a:hover {
-    text-decoration: underline;
-}
-
-.btn-second {
-    background: #666;
-    padding: 10px 18px;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    margin-top: 10px;
-}
-
-.btn-second:hover {
-    background: #444;
-}
-
-/* ==========================================================
-   DASHBOARD 
-   ========================================================== */
-   .menu {
-    display: flex;
-    flex-direction: column;   /* ✔ Susun vertikal */
-    width: 220px;             /* ✔ Lebar tetap */
-    gap: 12px;                /* ✔ Jarak antar tombol */
-    margin: 0 auto;           /* ✔ Tengah */
-    margin-top: 10px;
-}
-
-/* =========================================================
-   Halaman Untuk Pelanggan
-   ========================================================= */
-
-.catalog-title {
+/* About / Section titles */
+.section-title, .catalog-title {
     text-align: center;
     font-size: 22px;
     font-weight: bold;
     margin-top: 20px;
 }
 
+/* Catalog */
 .catalog-content {
     display: flex;
     justify-content: center;
@@ -220,26 +165,20 @@ input, select, textarea {
     padding: 20px;
     flex-wrap: wrap;
 }
-
 .product {
     width: 250px;
     border-radius: 12px;
-    padding: 10px;
+    padding: 12px;
     background: white;
     border: 2px solid var(--primary);
     text-align: center;
-    transition: 0.2s;
+    transition: 0.18s;
 }
-
 .product:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-6px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
-
-.product img {
-    width: 100%;
-    border-radius: 10px;
-}
+.product img { width: 100%; border-radius: 10px; }
 
 /* Popup */
 .popup {
@@ -251,110 +190,74 @@ input, select, textarea {
     align-items: center;
     z-index: 999;
 }
-
+.popup[aria-hidden="false"] { display:flex; }
 .popup-content {
     background: white;
-    width: 320px;
-    padding: 25px;
+    width: 360px;
+    padding: 22px;
     border-radius: 12px;
     border: 2px solid var(--primary);
 }
 
+/* REVIEW */
+.review { padding: 40px 60px; background: #fff3f7; }
+.review-list { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; }
+.review-card {
+    width: 260px;
+    padding: 16px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+.review-card span { color: var(--primary); font-weight:700; display:block; margin-top:8px; }
+
+/* CONTACT */
+.contact { padding: 40px 60px; text-align:center; }
+.contact-box p { margin:8px 0; }
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    padding: 18px;
+    background: transparent;
+    color: #6a4b5e;
+}
+
 /* =========================================================
-   Desain Table Umum
+   DASHBOARD VERTICAL MENU (admin/owner)
+   ========================================================= */
+.menu {
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    gap: 12px;
+    margin: 18px auto;
+}
+
+/* =========================================================
+   TABLE & GLOBAL COMPONENTS (from original)
    ========================================================= */
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-top: 10px;
-}
+table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; margin-top: 10px; }
+thead { background: var(--primary); color: white; }
+thead th { padding: 12px; font-weight: 600; text-align: center; }
+tbody td { padding: 12px; border-bottom: 1px solid #F0D4DD; text-align: center; }
+tbody tr:nth-child(even) { background: var(--bg-light); }
 
-thead {
-    background: var(--primary);
-    color: white;
-}
-
-thead th {
-    padding: 12px;
-    font-weight: 600;
-    text-align: center;
-}
-
-tbody td {
-    padding: 12px;
-    border-bottom: 1px solid #F0D4DD;
-    text-align: center;
-}
-
-tbody tr:nth-child(even) {
-    background: var(--bg-light);
-}
-
-/* Status Badge */
-.status {
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-weight: 600;
-    display: inline-block;
-}
-
+/* Status & action */
+.status { padding: 6px 12px; border-radius: 6px; font-weight: 600; display: inline-block; }
 .menunggu { background: #F4C430; color: #fff; }
 .proses   { background: #2980b9; color: #fff; }
 .selesai  { background: #27ae60; color: #fff; }
 .tolak    { background: #e74c3c; color: #fff; }
 
-/* Action Buttons */
-.aksi-btn {
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
-    margin-right: 5px;
-    color: white;
+.aksi-btn { padding: 6px 12px; border-radius: 8px; font-size: 14px; border: none; cursor: pointer; margin-right: 5px; color: white; }
+.acc { background: #27ae60; } .reject { background: #e74c3c; } .delete { background: #636e72; }
+
+/* responsive tweaks */
+@media (max-width: 900px) {
+    .hero { flex-direction: column; padding: 28px; }
+    .hero-text p { width: 100%; }
+    .hero-img img { width: 90%; max-width: 420px; }
+    .nav-menu { display: none; } /* keep simple mobile */
 }
-
-.acc     { background: #27ae60; }
-.reject  { background: #e74c3c; }
-.delete  { background: #636e72; }
-
-/* =========================================================
-   INVENTORY & TRANSAKSI
-   ========================================================= */
-
-.transaksi-body,
-.inv-body {
-    background: var(--bg-light);
-    padding: 25px;
-}
-
-.transaksi-form,
-.inv-form,
-.transaksi-table,
-.inv-table,
-.transaksi-chart,
-.inv-chart {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.btn-hapus, .btn-delete {
-    background: #e00000;
-    padding: 6px 12px;
-    border-radius: 6px;
-}
-
-.btn-hapus:hover, .btn-delete:hover {
-    background: #b70000;
-}
-
-.btn-back {
-    background: #666;
-}
-

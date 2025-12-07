@@ -1,23 +1,26 @@
-console.log("Script JS terbaca (clean version)");
+/* Merged script.js (customer + admin features) */
+console.log("Script JS terbaca (merged)");
 
 // ---------- Helpers ----------
-const $ = (sel, scope = document) => scope.querySelector(sel);
-const $$ = (sel, scope = document) => Array.from(scope.querySelectorAll(sel));
+const $ = (sel, scope = document) => (scope || document).querySelector(sel);
+const $$ = (sel, scope = document) => Array.from((scope || document).querySelectorAll(sel));
 const safeGet = id => document.getElementById(id) || null;
 
-// ---------- Global data stores (single source) ----------
+// ---------- Global data stores ----------
 let pesanan = JSON.parse(localStorage.getItem("pesanan")) || [];
 let transaksi = JSON.parse(localStorage.getItem("transaksi")) || [];
 let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
 
-// ---------- CUSTOMER PAGE ----------
+/* =========================
+   CUSTOMER: popup + order
+   ========================= */
 
-// Popup product order (standard)
+// Open product popup and populate fields
 function pesanProduk(nama, harga) {
     const popup = safeGet("popup");
     if (!popup) return;
     popup.style.display = "flex";
-    // set fields inside popup
+    popup.setAttribute("aria-hidden", "false");
     const prodEl = $("#Produk", popup);
     const priceEl = $("#Harga", popup);
     if (prodEl) prodEl.value = nama;
@@ -27,27 +30,32 @@ function pesanProduk(nama, harga) {
 // Close standard popup
 function tutupPopup() {
     const popup = safeGet("popup");
-    if (popup) popup.style.display = "none";
+    if (!popup) return;
+    popup.style.display = "none";
+    popup.setAttribute("aria-hidden", "true");
 }
 
 // Open/close custom popup
 function openCustomPopup() {
     const pop = safeGet("popupCustom");
-    if (pop) pop.style.display = "flex";
+    if (!pop) return;
+    pop.style.display = "flex";
+    pop.setAttribute("aria-hidden", "false");
 }
 function closeCustomPopup() {
     const pop = safeGet("popupCustom");
-    if (pop) pop.style.display = "none";
+    if (!pop) return;
+    pop.style.display = "none";
+    pop.setAttribute("aria-hidden", "true");
 }
 
-// Send custom order (scoped selectors to avoid duplicate ID collisions)
+// Send custom order
 function kirimCustomOrder() {
     const pop = safeGet("popupCustom");
     if (!pop) return;
 
-    // scope queries inside popupCustom to avoid duplicate ID problems
     const nameEl = $("#custName", pop);
-    const waEl = $("#NoWhatsApp", pop) || $("#NoWhatsApp"); // fallback
+    const waEl = $("#custWhatsApp", pop);
     const flowerEl = $("#custFlower", pop);
     const budgetEl = $("#custBudget", pop);
     const noteEl = $("#custNote", pop);
@@ -61,19 +69,17 @@ function kirimCustomOrder() {
     const note = noteEl?.value.trim() || "-";
     const due = dueEl?.value || "";
 
-    // Minimal validation
     if (!name || !wa || !budget || !due) {
         if (notif) notif.style.display = "block";
         return;
     }
 
-    // Build standardized order object
     const order = {
         id: Date.now(),
         nama: name,
         wa: wa,
         jumlah: 1,
-        produk: `Custom Bouquet`, // keep simple; details in `catatan`/`bunga`
+        produk: `Custom Bouquet`,
         harga: Number(budget),
         catatan: `Bunga: ${flower}. ${note}`,
         bunga: flower,
@@ -87,7 +93,7 @@ function kirimCustomOrder() {
     localStorage.setItem("pesanan", JSON.stringify(pesanan));
 
     alert("Pesanan custom berhasil dikirim!");
-    // reset fields if present
+    // reset
     if (nameEl) nameEl.value = "";
     if (waEl) waEl.value = "";
     if (flowerEl) flowerEl.value = "";
@@ -95,15 +101,13 @@ function kirimCustomOrder() {
     if (noteEl) noteEl.value = "";
     if (dueEl) dueEl.value = "";
     if (notif) notif.style.display = "none";
-
     closeCustomPopup();
 }
 
-// Standard product order submission (scope to #popup)
+// Standard product order submission
 function kirimPesanan() {
     const pop = safeGet("popup");
     if (!pop) return;
-
     const nameEl = $("#Nama", pop);
     const waEl = $("#NoWhatsApp", pop);
     const jumlahEl = $("#Jumlah", pop);
@@ -111,7 +115,6 @@ function kirimPesanan() {
     const hargaEl = $("#Harga", pop);
     const dueEl = $("#DueDate", pop);
 
-    // basic validation
     const name = nameEl?.value.trim() || "";
     const wa = waEl?.value.trim() || "";
     const jumlah = Number(jumlahEl?.value || 0);
@@ -152,72 +155,73 @@ function kirimPesanan() {
     if (dueEl) dueEl.value = "";
 }
 
-// Attach customer page buttons safely (if they exist)
+/* Close popups when clicking outside content */
 document.addEventListener("click", (e) => {
-    // close popup when clicking outside inner content
     if (e.target === safeGet("popup")) tutupPopup();
     if (e.target === safeGet("popupCustom")) closeCustomPopup();
 });
 
-// ---------- LOGIN & NAV ----------
+/* =========================
+   LOGIN / REGISTER / NAV
+   ========================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-    // login form
+    // LOGIN FORM (if exists)
     const loginForm = safeGet("loginForm");
     if (loginForm) {
         loginForm.addEventListener("submit", function (ev) {
             ev.preventDefault();
-    
             const user = safeGet("username")?.value || "";
             const pass = safeGet("password")?.value || "";
-    
             let users = JSON.parse(localStorage.getItem("users")) || [];
-    
+
             const found = users.find(u => u.username === user && u.password === pass);
-    
             if (!found) {
                 alert("Username atau password salah!");
                 return;
             }
-    
             sessionStorage.setItem("role", found.role);
             sessionStorage.setItem("username", found.username);
-    
             alert("Login berhasil!");
             window.location.href = "dashboard.html";
         });
     }
-    
-    //Register Akun
-    document.getElementById("registerForm").addEventListener("submit", function(e){
-        e.preventDefault();
-    
-        const user = document.getElementById("regUsername").value;
-        const pass = document.getElementById("regPassword").value;
-        const role = document.getElementById("regRole").value;
-    
-        if (!user || !pass) {
-            alert("Semua field wajib diisi!");
-            return;
-        }
-    
-        // Simpan akun baru ke localStorage
-        let users = JSON.parse(localStorage.getItem("users")) || [];
-        users.push({ username: user, password: pass, role: role });
-        localStorage.setItem("users", JSON.stringify(users));
-    
-        alert("Registrasi berhasil! Silakan login.");
-        window.location.href = "login.html";
-    });
 
-    // protect dashboard
+    // REGISTER FORM (if exists)
+    const regForm = safeGet("registerForm");
+    if (regForm) {
+        regForm.addEventListener("submit", function(e){
+            e.preventDefault();
+            const user = safeGet("regUsername")?.value || "";
+            const pass = safeGet("regPassword")?.value || "";
+            const role = safeGet("regRole")?.value || "pegawai";
+
+            if (!user || !pass) {
+                alert("Semua field wajib diisi!");
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            // prevent duplicate username
+            if (users.find(u => u.username === user)) {
+                alert("Username sudah terdaftar, silakan pilih username lain!");
+                return;
+            }
+            users.push({ username: user, password: pass, role: role });
+            localStorage.setItem("users", JSON.stringify(users));
+            alert("Registrasi berhasil! Silakan login.");
+            window.location.href = "login.html";
+        });
+    }
+
+    // protect dashboard (if on admin/dashboard page)
     if (document.body.classList.contains("dashboard-body") && !sessionStorage.getItem("role")) {
         alert("Anda harus login terlebih dahulu!");
         window.location.href = "login.html";
     }
 });
 
-// logout
+/* Logout */
 function logout() {
     sessionStorage.clear();
     alert("Logout berhasil!");
@@ -227,22 +231,23 @@ function goTo(page) {
     window.location.href = page;
 }
 
-// ---------- TRANSAKSI PAGE ----------
+/* =========================
+   TRANSAKSI / INVENTORY / PESANAN modules
+   (These modules run only if their pages contain expected elements)
+   ========================= */
+
+// TRANSAKSI module (if transaksi page present)
 (function initTransaksi() {
     const transForm = safeGet("transForm");
     const tbody = safeGet("dataTransaksi");
     const chartCanvas = safeGet("chartPenjualan");
     let chart = null;
 
-    // load function
     function loadTransaksi() {
         if (!tbody) return;
         tbody.innerHTML = "";
         transaksi.forEach((t, index) => {
-            if (!t || !t.nama || !t.produk || !t.jumlah || !t.total || !t.metode) {
-                console.warn("Data transaksi rusak:", t);
-                return;
-            }
+            if (!t || !t.nama) return;
             tbody.innerHTML += `
                 <tr>
                     <td>${t.nama}</td>
@@ -266,7 +271,6 @@ function goTo(page) {
 
     function updateChart() {
         if (!chartCanvas) return;
-        // aggregate by produk + metode
         const grouped = {};
         transaksi.forEach(t => {
             const key = `${t.produk} | ${t.metode}`;
@@ -275,17 +279,13 @@ function goTo(page) {
         });
         const labels = Object.keys(grouped);
         const data = Object.values(grouped);
-
         if (chart) chart.destroy();
-        // ensure Chart exists
         try {
             chart = new Chart(chartCanvas.getContext("2d"), {
                 type: "bar",
                 data: { labels, datasets: [{ label: "Total Pendapatan", data }] }
             });
-        } catch (err) {
-            console.warn("Chart.js error:", err);
-        }
+        } catch (err) { console.warn("Chart.js error:", err); }
     }
 
     if (transForm) {
@@ -311,22 +311,12 @@ function goTo(page) {
             updateChart();
         });
 
-        // initial load on transaksi page
         loadTransaksi();
         updateChart();
     }
 })();
 
-// reset transaksi storage
-function resetData() {
-    if (confirm("Reset semua data transaksi?")) {
-        localStorage.removeItem("transaksi");
-        transaksi = [];
-        location.reload();
-    }
-}
-
-// ---------- INVENTORY ----------
+// INVENTORY module
 (function initInventory() {
     const invForm = safeGet("invForm");
     const tbodyInv = safeGet("dataInventory");
@@ -365,9 +355,7 @@ function resetData() {
                 type: "bar",
                 data: { labels, datasets: [{ label: "Jumlah Stok", data }] }
             });
-        } catch (err) {
-            console.warn("Chart.js error:", err);
-        }
+        } catch (err) { console.warn("Chart.js error:", err); }
     }
 
     if (invForm) {
@@ -398,43 +386,32 @@ function resetData() {
     }
 })();
 
-// ---------- PESANAN (ADMIN/PEGAWAI) ----------
+// PESANAN (admin) module
 (function initPesanan() {
     const tbody = safeGet("listPesanan");
     if (!tbody) return;
 
-    // helper to compute priority category based on difference in days
     function priorityFromDue(dueStr) {
         if (!dueStr) return "low";
         const due = new Date(dueStr);
         const today = new Date();
-        const diff = Math.ceil((due - today) / (1000 * 60 * 60 * 24)); // days left
+        const diff = Math.ceil((due - today) / (1000 * 60 * 60 * 24));
         if (diff <= 1) return "high";
         if (diff <= 3) return "medium";
         return "low";
     }
 
     function loadPesanan() {
-        // ensure pesanan array exists
         pesanan = JSON.parse(localStorage.getItem("pesanan")) || [];
-
-        // sort by dueDate asc (earliest first)
-        pesanan.sort((a, b) => {
+        pesanan.sort((a,b) => {
             const da = a.dueDate ? new Date(a.dueDate) : new Date(8640000000000000);
             const db = b.dueDate ? new Date(b.dueDate) : new Date(8640000000000000);
             return da - db;
         });
-
         tbody.innerHTML = "";
-
         pesanan.forEach((p, i) => {
             const priorityLabel = priorityFromDue(p.dueDate);
-            let prText = (i+1);
-            let prClass = '';
-            if (priorityLabel === "high") prClass = 'prio-tinggi';
-            else if (priorityLabel === "medium") prClass = 'prio-sedang';
-            else prClass = 'prio-rendah';
-
+            let prClass = priorityLabel === 'high' ? 'prio-tinggi' : (priorityLabel === 'medium' ? 'prio-sedang' : 'prio-rendah');
             tbody.innerHTML += `
                 <tr class="${priorityLabel === 'high' ? 'prioritas-tinggi' : ''}">
                     <td>${p.nama}</td>
@@ -471,8 +448,5 @@ function resetData() {
         loadPesanan();
     };
 
-    // initial load for pesanan page
     loadPesanan();
 })();
-
-// end of script
